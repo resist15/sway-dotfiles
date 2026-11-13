@@ -1,0 +1,11 @@
+image=/home/sourav/walls/DSC00840.jpg
+scaling=fill
+color=0f1720
+indicator-radius=80
+inside-color=1e1e2eee
+ring-color=89b4fa
+key-hl-color=4BAAC8
+line-color=00000000
+text-color=ffffff
+show-failed-attempts
+ignore-empty-password

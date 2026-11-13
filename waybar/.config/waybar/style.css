@@ -1,0 +1,57 @@
+/* Same palette as polybar config.ini */
+@define-color background     #000000;
+@define-color background-alt #373B41;
+@define-color foreground     #FFFFFF;
+@define-color primary        #4BAAC8;
+@define-color alert          #A54242;
+@define-color disabled       #707880;
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "JoyPixels", monospace;
+  font-size: 10pt;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @background;
+  color: @foreground;
+}
+
+/* polybar: module-margin = 1 + separator "|" */
+.modules-right > widget > * {
+  padding: 0 8px;
+}
+.modules-right > widget:not(:first-child) > * {
+  border-left: 1px solid @disabled;
+}
+.modules-left > widget > * {
+  padding: 0 8px;
+}
+
+/* top bar */
+#custom-branding { color: @primary; }
+#custom-dunst    { color: @primary; }
+#custom-music    { box-shadow: inset 0 -2px #1db954; padding: 0 16px; }
+#temperature.critical { color: @alert; }
+
+/* bottom bar: workspaces (polybar xworkspaces) */
+#workspaces { padding: 0; }
+#workspaces button {
+  padding: 0 8px;
+  color: @foreground;
+  background: transparent;
+  box-shadow: none;
+  transition: none;
+}
+#workspaces button.focused {
+  background: @background-alt;
+  box-shadow: inset 0 -2px @primary;
+}
+#workspaces button.urgent { background: @alert; }
+#workspaces button:hover  { background: @background-alt; box-shadow: inset 0 -2px @disabled; }
+
+#mode  { background: @alert; }
+#clock { color: @primary; }
+#tray  { padding-right: 8px; }

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Sway (NVIDIA)
+Comment=Sway Wayland compositor with NVIDIA tweaks
+Exec=/home/sourav/.local/bin/sway-run
+Type=Application
+DesktopNames=sway

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Dotfiles installer: installs Wayland packages, backs up existing configs,
+# symlinks everything with GNU stow, and adds the "Sway (NVIDIA)" login session.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+PACKAGES=(i3 polybar picom rofi dunst alacritty fish nvim sway waybar swaylock bin)
+
+if [[ "${1:-}" != "--no-pkgs" ]]; then
+  sudo pacman -S --needed \
+    stow sway swaybg swaylock swayidle waybar wob \
+    xorg-xwayland xdg-desktop-portal-wlr wl-clipboard grim slurp \
+    gammastep pamixer playerctl libnotify
+fi
+
+# Back up any real (non-symlink) config that stow would collide with
+BACKUP="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
+for pkg in "${PACKAGES[@]}"; do
+  while IFS= read -r -d '' f; do
+    target="$HOME/${f#"$pkg"/}"
+    if [[ -e "$target" && ! -L "$target" ]]; then
+      mkdir -p "$BACKUP/$(dirname "${target#"$HOME"/}")"
+      mv "$target" "$BACKUP/${target#"$HOME"/}"
+    fi
+  done < <(find "$pkg" -mindepth 1 \( -type f -o -type l \) -print0)
+done
+[[ -d "$BACKUP" ]] && echo "Backed up old configs to $BACKUP"
+
+stow -v -t "$HOME" "${PACKAGES[@]}"
+
+sudo install -Dm644 system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop
+echo "Done. Log out, pick 'Sway (NVIDIA)' in ly. i3 is still available as before."

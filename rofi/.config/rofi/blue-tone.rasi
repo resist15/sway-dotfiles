@@ -1,0 +1,110 @@
+* {
+    /* Blue Night Theme */
+    bg:         #0f1720;
+    bg1:        #16202a;
+    bg2:        #1d2a36;
+    bg3:        #2a3a49;
+
+    fg:         #c5d7e3;
+    muted:      #7f93a3;
+
+    blue:       #4fa3d1;
+    cyan:       #67c1dc;
+    teal:       #5fb3b3;
+
+    borderc:    #2d6f91;
+
+    background-color: transparent;
+    text-color: @fg;
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    width:              640px;
+    border:             2px;
+    border-color:       @borderc;
+    border-radius:      14px;
+
+    background-color:   rgba (15, 23, 32, 92%);
+}
+
+mainbox {
+    background-color:   transparent;
+    padding:            14px;
+}
+
+inputbar {
+    background-color:   rgba (22, 32, 42, 95%);
+    border:             1px;
+    border-color:       @bg3;
+
+    border-radius:      10px;
+    padding:            10px 14px;
+    margin:             0 0 14px 0;
+
+    children:           [ prompt, entry ];
+}
+
+prompt {
+    text-color:         @blue;
+    padding:            0 10px 0 0;
+    font:               "JetBrainsMono Nerd Font Bold 11";
+}
+
+entry {
+    text-color:         @fg;
+    placeholder:        "Search...";
+    placeholder-color:  @muted;
+    background-color:   transparent;
+}
+
+listview {
+    background-color:   transparent;
+
+    lines:              8;
+    columns:            1;
+
+    spacing:            6px;
+    scrollbar:          false;
+    padding:            2px;
+}
+
+element {
+    background-color:   transparent;
+    border-radius:      10px;
+
+    padding:            10px 14px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+element selected.normal {
+    background-color: rgba (79, 163, 209, 18%);
+    border:            1px;
+    border-color:      @blue;
+
+    text-color:        @cyan;
+}
+
+element-icon {
+    background-color: transparent;
+    size:              22px;
+    padding:           0 12px 0 0;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+}
+
+message {
+    background-color: transparent;
+}
+
+textbox {
+    text-color: @fg;
+}

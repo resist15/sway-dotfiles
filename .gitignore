@@ -1,0 +1,10 @@
+# Secrets — never commit
+**/secrets.fish
+*.env
+.env*
+
+# Machine state
+fish/.config/fish/fish_variables
+nvim/.config/nvim/lazy-lock.json.bak
+**/*.bak
+**/*.log
