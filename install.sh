@@ -28,5 +28,6 @@ done
 
 stow -v -t "$HOME" "${PACKAGES[@]}"
 
-sudo install -Dm644 system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop
+cmp -s system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop \
+  || sudo install -Dm644 system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop
 echo "Done. Log out, pick 'Sway (NVIDIA)' in ly. i3 is still available as before."
