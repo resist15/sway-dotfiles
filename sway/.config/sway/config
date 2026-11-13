@@ -30,7 +30,29 @@ input type:keyboard {
     # xkb_options grp:caps_toggle,grp_led:caps
 }
 
+# Same as old X11 /etc/X11/xorg.conf.d/40-libinput.conf (no mouse acceleration)
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0
+}
+
 focus_follows_mouse yes
+
+# Cursor (same as gtk-3.0/settings.ini)
+seat seat0 xcursor_theme capitaine-cursors 24
+
+# On Wayland, GTK/Chrome read fonts+theme from gsettings, not gtk-3.0/settings.ini.
+# Mirror the i3 look: Fira Sans 10, full hinting, cachyos-nord, dark.
+exec_always {
+    gsettings set org.gnome.desktop.interface font-name 'Fira Sans 10'
+    gsettings set org.gnome.desktop.interface document-font-name 'Fira Sans 10'
+    gsettings set org.gnome.desktop.interface font-hinting 'full'
+    gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
+    gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors'
+    gsettings set org.gnome.desktop.interface cursor-size 24
+}
 
 ########################################################################
 ####                   KEYBINDS (same as i3)
@@ -145,6 +167,13 @@ client.background       #1e1e2e
 
 default_border pixel 1
 default_floating_border pixel 1
+
+# ── SwayFX: light eye candy (cheap on the GPU; blur/shadows stay off) ──
+animation_duration_ms 150
+corner_radius 10
+smart_corner_radius enable
+shadows disable
+blur disable
 
 ########################################################################
 ####                   WINDOW RULES
