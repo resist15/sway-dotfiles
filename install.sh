@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PACKAGES=(i3 polybar picom rofi dunst alacritty fish nvim sway waybar swaylock bin)
+PACKAGES=(i3 polybar picom rofi dunst alacritty fish nvim sway waybar swaylock bin chrome)
 
 if [[ "${1:-}" != "--no-pkgs" ]]; then
   sudo pacman -S --needed \
@@ -27,6 +27,11 @@ done
 [[ -d "$BACKUP" ]] && echo "Backed up old configs to $BACKUP"
 
 stow -v -t "$HOME" "${PACKAGES[@]}"
+
+# Firefox: link user.js (hardware video decode prefs) into the default profile
+for prof in "$HOME"/.config/mozilla/firefox/*.default-release "$HOME"/.mozilla/firefox/*.default-release; do
+  [[ -d "$prof" ]] && ln -sf "$PWD/firefox/user.js" "$prof/user.js"
+done
 
 cmp -s system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop \
   || sudo install -Dm644 system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop
