@@ -83,7 +83,7 @@
       "format": "{}"
     },
     "disk": {
-      "path": "/",
+      "paths": ["/"],
       "interval": 25,
       "format": "<span color='#4BAAC8'> </span>{free}",
       "tooltip": false

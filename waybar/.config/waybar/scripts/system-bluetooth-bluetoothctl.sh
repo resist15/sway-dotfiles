@@ -1,4 +1,7 @@
 #!/bin/sh
+# bluetoothctl hangs forever if bluetooth.service is down -> bail early
+systemctl is-active -q bluetooth || { [ "$1" = "--toggle" ] || echo "󰂲 off"; exit 0; }
+bluetoothctl() { timeout 2 command bluetoothctl "$@"; }
 if [ "$1" = "--toggle" ]; then
   connected=$(bluetoothctl devices Connected | awk '{print $2}')
   if [ -n "$connected" ]; then
