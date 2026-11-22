@@ -16,7 +16,7 @@ include /etc/sway/config.d/*
 ########################################################################
 
 # On Wayland the NVIDIA HDMI port is usually named HDMI-A-1 (check: swaymsg -t get_outputs)
-output * mode 1920x1080@60Hz
+output * mode 1920x1080@74.973Hz
 output * bg ~/walls/DSC00840.jpg fill
 # Fallback if the wallpaper is missing:  output * bg #000000 solid_color
 
@@ -170,6 +170,8 @@ default_border pixel 1
 default_floating_border pixel 1
 
 # ── SwayFX: light eye candy (cheap on the GPU; blur/shadows stay off) ──
+# Needs swayfx >= 0.6.1 (0.6 left workspaces blank after fullscreen, swayfx #569).
+# Change only with a log out/in, never at runtime.
 animation_duration_ms 150
 corner_radius 10
 smart_corner_radius enable
