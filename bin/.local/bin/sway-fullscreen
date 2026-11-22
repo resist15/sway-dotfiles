@@ -1,0 +1,40 @@
+#!/bin/sh
+# Mod+f. Real fullscreen for most windows. For browsers, a "fake" fullscreen:
+# float the window over the whole output (bars included) without telling the
+# app, so Chrome keeps its tab strip and address bar. Needs waybar "layer": "bottom".
+# A neighbour gets a mark so the window returns to the same tiling slot.
+BROWSERS='^(google-chrome|Google-chrome|chromium|Chromium|brave-browser|Brave-browser)$'
+
+tree=$(swaymsg -t get_tree) || exit 1
+win=$(printf '%s' "$tree" | jq -r '.. | objects | select(.focused == true and (.pid != null))
+  | [.id, (.app_id // .window_properties.class // ""), ((.marks // []) | index("_fakefs") != null)] | @tsv')
+[ -z "$win" ] && exit 0
+id=$(printf '%s' "$win" | cut -f1)
+app=$(printf '%s' "$win" | cut -f2)
+fake=$(printf '%s' "$win" | cut -f3)
+
+if [ "$fake" = true ]; then
+    swaymsg "[con_id=$id] unmark _fakefs, floating disable, border pixel 1" >/dev/null
+    has() { swaymsg -t get_marks | jq -e --arg m "$1" 'index($m) != null' >/dev/null; }
+    if has "_fakefs_prev_$id"; then
+        swaymsg "[con_id=$id] move container to mark _fakefs_prev_$id" >/dev/null
+    elif has "_fakefs_next_$id"; then
+        # moving to a mark lands after it; swap to end up before it
+        swaymsg "[con_id=$id] move container to mark _fakefs_next_$id; [con_id=$id] swap container with mark _fakefs_next_$id" >/dev/null
+    fi
+    swaymsg "[con_mark=_fakefs_prev_$id] unmark _fakefs_prev_$id; [con_mark=_fakefs_next_$id] unmark _fakefs_next_$id; [con_id=$id] focus" >/dev/null 2>&1
+elif printf '%s' "$app" | grep -Eq "$BROWSERS"; then
+    # Remember a tiled neighbour (previous sibling, else next one)
+    nb=$(printf '%s' "$tree" | jq -r --argjson id "$id" '.. | objects | select(.nodes? and any(.nodes[]; .id == $id))
+      | (.nodes | map(.id) | index($id)) as $i
+      | if $i > 0 then "prev \(.nodes[$i-1].id)" elif (.nodes | length) > 1 then "next \(.nodes[1].id)" else empty end')
+    if [ -n "$nb" ]; then
+        set -- $nb
+        swaymsg "[con_id=$2] mark --add _fakefs_$1_$id" >/dev/null
+    fi
+    out=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .rect | "\(.x) \(.y) \(.width) \(.height)"')
+    set -- $out
+    swaymsg "[con_id=$id] mark --add _fakefs, floating enable, border none, resize set $3 $4, move absolute position $1 $2" >/dev/null
+else
+    swaymsg fullscreen toggle >/dev/null
+fi

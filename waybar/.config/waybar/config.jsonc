@@ -3,7 +3,7 @@
   // ───────────────────────── TOP BAR (polybar: top) ─────────────────────────
   {
     "name": "top",
-    "layer": "top",
+    "layer": "bottom",
     "position": "top",
     "height": 31,
     "spacing": 0,
@@ -66,7 +66,7 @@
   // ─────────────────────── BOTTOM BAR (polybar: mybar) ──────────────────────
   {
     "name": "bottom",
-    "layer": "top",
+    "layer": "bottom",
     "position": "bottom",
     "height": 31,
     "spacing": 0,

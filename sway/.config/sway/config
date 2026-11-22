@@ -76,7 +76,8 @@ bindsym $mod+h splith
 bindsym $mod+v splitv
 bindsym $mod+t splitt
 
-bindsym $mod+f fullscreen toggle
+# Browsers get a fake fullscreen that keeps the toolbar (see the script)
+bindsym $mod+f exec ~/.local/bin/sway-fullscreen
 
 # Screenshots (maim/xclip -> grim/slurp/wl-copy)
 bindsym $mod+Shift+s exec grim - | wl-copy -t image/png && notify-send "Screenshot" "Fullscreen copied to clipboard"
