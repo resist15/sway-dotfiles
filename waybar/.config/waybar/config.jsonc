@@ -9,8 +9,7 @@
     "spacing": 0,
     "modules-left": ["custom/branding", "sway/window"],
     "modules-right": [
-      "custom/bluetooth",
-      "custom/music",
+      "mpris",
       "temperature",
       "custom/gpu",
       "custom/dunst"
@@ -25,33 +24,29 @@
       "max-length": 60,
       "tooltip": false
     },
-    "custom/bluetooth": {
-      "exec": "~/.config/waybar/scripts/system-bluetooth-bluetoothctl.sh",
-      "interval": 3,
-      "on-click": "~/.config/waybar/scripts/system-bluetooth-bluetoothctl.sh --toggle",
-      "tooltip": false
-    },
-    "custom/music": {
-      "exec": "~/.config/waybar/scripts/music.sh",
-      "interval": 2,
-      "on-click": "playerctl play-pause",
-      "on-click-right": "playerctl next",
-      "on-click-middle": "playerctl previous",
+    "mpris": {
+      "format": "<span color='#4BAAC8'>{status_icon}</span>  {dynamic}",
+      "format-paused": "<span color='#707880'>{status_icon}</span>  {dynamic}",
+      "status-icons": { "playing": "󰐊", "paused": "󰏤", "stopped": "󰓛" },
+      "dynamic-order": ["artist", "title"],
+      "dynamic-separator": " – ",
+      "dynamic-len": 45,
       "on-scroll-up": "playerctl next",
       "on-scroll-down": "playerctl previous",
-      "tooltip": false
+      "tooltip-format": "{player}: {artist} – {title}"
     },
     "temperature": {
       "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
       "input-filename": "temp1_input",
       "critical-threshold": 80,
       "interval": 5,
-      "format": "CPU-TEMP : {temperatureC}°C",
+      "format": "<span color='#4BAAC8' font_size='13pt' letter_spacing='-5120'>󰔏</span> {temperatureC}°C",
       "tooltip": false
     },
     "custom/gpu": {
       "exec": "~/.config/waybar/scripts/system-nvidia-smi.sh",
       "interval": 2,
+      "format": "<span color='#4BAAC8' font_size='13pt' letter_spacing='3072'>󰢮</span> {}",
       "tooltip": false
     },
     "custom/dunst": {

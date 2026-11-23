@@ -19,21 +19,26 @@ window#waybar {
   color: @foreground;
 }
 
-/* polybar: module-margin = 1 + separator "|" */
+/* Module spacing + short, dim, vertically centred dividers.
+   The gradient border-image draws only the middle 40% of the left border,
+   so modules keep full bar height (no margin pushing the bar taller). */
+@define-color divider #3A3F47;
+
+.modules-left > widget > *,
 .modules-right > widget > * {
-  padding: 0 8px;
+  padding: 0 12px;
 }
-.modules-right > widget:not(:first-child) > * {
-  border-left: 1px solid @disabled;
-}
-.modules-left > widget > * {
-  padding: 0 8px;
+.modules-right > widget:not(:first-child) > *,
+.modules-left > widget:not(:first-child) > * {
+  border-left: 2px solid transparent;
+  border-image: linear-gradient(to bottom,
+      transparent 30%, @divider 30%, @divider 70%, transparent 70%) 0 0 0 2;
 }
 
 /* top bar */
 #custom-branding { color: @primary; }
 #custom-dunst    { color: @primary; }
-#custom-music    { box-shadow: inset 0 -2px #1db954; padding: 0 16px; }
+#mpris.paused    { color: @disabled; }
 #temperature.critical { color: @alert; }
 
 /* bottom bar: workspaces (polybar xworkspaces) */
