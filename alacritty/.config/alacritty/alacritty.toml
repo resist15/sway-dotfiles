@@ -185,3 +185,15 @@ working_directory = "None"
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+# Send Ctrl+Tab / Ctrl+Shift+Tab as distinct keys (CSI-u), so Neovim can use them
+# (terminal tabs in nvim's bottom panel). Without this Alacritty sends a plain Tab.
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control"
+chars = "\u001B[9;5u"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control|Shift"
+chars = "\u001B[9;6u"
