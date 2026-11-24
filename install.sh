@@ -7,13 +7,14 @@ cd "$(dirname "$0")"
 # nvim/.config/nvim is a git submodule (github.com/resist15/kickstart.nvim)
 git submodule update --init --recursive
 
-PACKAGES=(i3 polybar picom rofi dunst alacritty fish nvim sway waybar swaylock bin chrome)
+PACKAGES=(rofi dunst alacritty fish nvim sway waybar swaylock bin chrome)
 
 if [[ "${1:-}" != "--no-pkgs" ]]; then
   sudo pacman -S --needed \
-    stow sway swaybg swaylock swayidle waybar wob \
+    stow swayfx swaybg swaylock swayidle waybar wob \
     xorg-xwayland xdg-desktop-portal-wlr wl-clipboard grim slurp \
-    gammastep pamixer playerctl libnotify
+    gammastep pamixer playerctl libnotify \
+    rofi dunst dex polkit-gnome jq capitaine-cursors
 fi
 
 # Back up any real (non-symlink) config that stow would collide with
@@ -38,4 +39,4 @@ done
 
 cmp -s system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop \
   || sudo install -Dm644 system/sway-nvidia.desktop /usr/share/wayland-sessions/sway-nvidia.desktop
-echo "Done. Log out, pick 'Sway (NVIDIA)' in ly. i3 is still available as before."
+echo "Done. Log out and pick 'Sway (NVIDIA)' in ly."

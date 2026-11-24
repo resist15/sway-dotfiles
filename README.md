@@ -1,16 +1,15 @@
 # dotfiles
 
-CachyOS / Arch, NVIDIA GT 1030. Sway (Wayland), with i3 (X11) kept as a fallback.
+CachyOS / Arch, NVIDIA GT 1030. SwayFX (Wayland) only; the old i3/X11 setup was removed on 2026-11-24 (it's in git history).
 Managed with [GNU stow](https://www.gnu.org/software/stow/): each top-level folder is a package that mirrors `$HOME`.
 
 | package    | what                                                      |
 |------------|-----------------------------------------------------------|
-| `sway`     | Sway config, a 1:1 port of the i3 config                  |
-| `waybar`   | Both bars (top + bottom), rebuilt from polybar            |
+| `sway`     | SwayFX config (originally ported 1:1 from i3)             |
+| `waybar`   | Both bars (top + bottom)                                  |
 | `swaylock` | Lock screen                                               |
 | `bin`      | `~/.local/bin/sway-run`, which launches Sway with the NVIDIA env |
-| `i3`, `polybar`, `picom` | X11 setup, still works from the login screen |
-| `rofi`, `dunst`, `alacritty`, `fish` | shared by both sessions |
+| `rofi`, `dunst`, `alacritty`, `fish` | launcher, notifications, terminal, shell |
 | `nvim`     | Neovim config: a git submodule of [resist15/kickstart.nvim](https://github.com/resist15/kickstart.nvim) |
 | `chrome`   | `~/.config/chrome-flags.conf`, which turns on VA-API hardware video decode on NVIDIA |
 | `firefox/` | `user.js` (VA-API decode, AV1 off), symlinked into the profile by `install.sh` |
