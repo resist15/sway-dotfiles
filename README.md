@@ -10,7 +10,8 @@ Managed with [GNU stow](https://www.gnu.org/software/stow/): each top-level fold
 | `swaylock` | Lock screen                                               |
 | `bin`      | `~/.local/bin/sway-run`, which launches Sway with the NVIDIA env |
 | `i3`, `polybar`, `picom` | X11 setup, still works from the login screen |
-| `rofi`, `dunst`, `alacritty`, `fish`, `nvim` | shared by both sessions |
+| `rofi`, `dunst`, `alacritty`, `fish` | shared by both sessions |
+| `nvim`     | Neovim config: a git submodule of [resist15/kickstart.nvim](https://github.com/resist15/kickstart.nvim) |
 | `chrome`   | `~/.config/chrome-flags.conf`, which turns on VA-API hardware video decode on NVIDIA |
 | `firefox/` | `user.js` (VA-API decode, AV1 off), symlinked into the profile by `install.sh` |
 | `system/`  | files outside `$HOME` (login session entry), installed by `install.sh` |
@@ -18,7 +19,7 @@ Managed with [GNU stow](https://www.gnu.org/software/stow/): each top-level fold
 ## Fresh machine
 
 ```sh
-git clone <this repo> ~/dotfiles && ~/dotfiles/install.sh
+git clone --recurse-submodules <this repo> ~/dotfiles && ~/dotfiles/install.sh
 ```
 
 Secrets (tokens, passwords) go in `~/.config/fish/secrets.fish`, which is gitignored and sourced by `config.fish`.
@@ -29,6 +30,14 @@ Edit files normally in `~/.config/...`. They are symlinks into this repo. Then:
 
 ```sh
 cd ~/dotfiles && git add -A && git commit -m "..." && git push
+```
+
+Neovim changes live in the submodule, so commit and push them there first, then
+record the new submodule commit here:
+
+```sh
+cd ~/dotfiles/nvim/.config/nvim && git add -A && git commit -m "..." && git push
+cd ~/dotfiles && git add nvim/.config/nvim && git commit -m "nvim: bump" && git push
 ```
 
 ## i3 → Sway mapping

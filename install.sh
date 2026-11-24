@@ -4,6 +4,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# nvim/.config/nvim is a git submodule (github.com/resist15/kickstart.nvim)
+git submodule update --init --recursive
+
 PACKAGES=(i3 polybar picom rofi dunst alacritty fish nvim sway waybar swaylock bin chrome)
 
 if [[ "${1:-}" != "--no-pkgs" ]]; then
